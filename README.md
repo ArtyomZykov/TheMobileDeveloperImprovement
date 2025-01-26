@@ -11,25 +11,27 @@
 
 Android
 
-Основные компоненты Android приложения. Activity, Fragment, layouts. Activity Launch Mode
-Основные компоненты Android приложения. Фоновая работа. Background service. Work Manager
-Основные компоненты Android приложения. Broadcast Receiver
-Основные компоненты Android приложения. ContentProvider
-Jetpack библиотеки для современного Android приложения. ViewModel
-SharedPreferences, DataStore
+- Основные компоненты Android приложения. Activity, Fragment, layouts. Activity Launch Mode
+- Основные компоненты Android приложения. Фоновая работа. Background service. Work Manager
+- Основные компоненты Android приложения. Broadcast Receiver
+- Основные компоненты Android приложения. ContentProvider
+- Jetpack библиотеки для современного Android приложения. ViewModel
+- SharedPreferences, DataStore
 1. Точка контроля: написать простое приложение Android с шедулированием работы в фоне. Предусмотреть корректность работы по жизненному циклу ViewModel и Activity
-Архитектура современного Android приложения. MVVM, CleanArch. UseCase
-DI на Dagger, Hilt
+
+- Архитектура современного Android приложения. MVVM, CleanArch. UseCase
+- DI на Dagger, Hilt
 2. Точка контроля: написать приложение Android с 1-2 Dagger модулями. Использовать архитектуру CleanArch с UseCase
-Сетевой слой на Retrofit + OkHttp. Gson
-Хранилища данных в Android. Локальное хранилище Room. 
+  
+- Сетевой слой на Retrofit + OkHttp. Gson
+- Хранилища данных в Android. Локальное хранилище Room. 
 3. Точка контроля: написать приложение Android с сетевым клиентом. Добавить сохранение закешированных данных с помощью Room и SharePreferences.
 
 
-Compose 
-Архитектура Compose приложения
-Управление состоянием приложения, создание и конфигурация модулей, сохранение состояния ViewModel.
-Навигация в Compose приложении
+Compose
+- Архитектура Compose приложения
+- Управление состоянием приложения, создание и конфигурация модулей, сохранение состояния ViewModel.
+- Навигация в Compose приложении
 4. Точка контроля: написать приложение Android Compose на 2-3 экрана. Выбрать архитектуру, выбор обосновать. Предусмотреть корректность управления состоянием. Адаптировать бизнес-логику к архитектуре Compose.
 
 
