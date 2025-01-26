@@ -10,7 +10,6 @@
 
 
 Android
-
 - Основные компоненты Android приложения. Activity, Fragment, layouts. Activity Launch Mode
 - Основные компоненты Android приложения. Фоновая работа. Background service. Work Manager
 - Основные компоненты Android приложения. Broadcast Receiver
@@ -37,30 +36,32 @@ Compose
 
 Kotlin Multiplatform. Современный стек
 
-Современное состояние Kotlin Native, управление памятью и современная таблица Interop
-Современное состояние многопоточности. Общие Dispatchers. Coroutines
-Сетевой слой на Ktor
-Локальное хранилище на Room
-Использование DI Koin/Kodein
-Приложение с общей архитектурой, общей ViewModel.
-Управление состоянием приложения, создание и конфигурация модулей, сохранение состояния ViewModel.
-Compose Multiplatform. 
-Навигация (PreCompose, Decompose)
+- Современное состояние Kotlin Native, управление памятью и современная таблица Interop
+- Современное состояние многопоточности. Общие Dispatchers. Coroutines
+- Сетевой слой на Ktor
+- Локальное хранилище на Room
+- Использование DI Koin/Kodein
+- Приложение с общей архитектурой, общей ViewModel.
+- Управление состоянием приложения, создание и конфигурация модулей, сохранение состояния ViewModel.
+- Compose Multiplatform. 
+- Навигация (PreCompose, Decompose)
 5. Точка контроля: 
-1 адаптировать приложение Android под приложение KMP
-2 Реализовать приложение KMP на современном стеке
+  5.1 адаптировать приложение Android под приложение KMP
+  5.2 Реализовать приложение KMP на современном стеке
+
 
 Kotlin
-Обычные классы, Data классы, Sealed
-Модификаторы доступа
-Unit, Notning, Any
-Sealed vs enum
-inline классы, generics
-interface vs Abstract классы, Sealed interface
-Extensions
-Kotlin Flows, Shared vs State
-Виды ссылок, Strong, Weak
+- Обычные классы, Data классы, Sealed
+- Модификаторы доступа
+- Unit, Notning, Any
+- Sealed vs enum
+- inline классы, generics
+- interface vs Abstract классы, Sealed interface
+- Extensions
+- Kotlin Flows, Shared vs State
+- Виды ссылок, Strong, Weak
 </details>
+
 
 <details close>
 <summary>Точки контроля 1-3</summary>
