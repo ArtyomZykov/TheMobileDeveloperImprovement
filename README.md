@@ -66,13 +66,13 @@ Kotlin Flows, Shared vs State
 Было прнято решение объеденить 3 точки контроя в одно прилодение. Weather Tracker позволяет пользователям получать текущую информацию о погоде и прогноз на несколько дней вперед для выбранного города. Приложение также поддерживает фоновую работу для обновления данных о погоде и уведомления о значительных изменениях.
 
 Стек:
-Activity: MainActivity с Launch Mode singleTask
-Fragments
-XML layouts
-Jetpack ViewModel
-Retrofit + OkHttp: для получения данных о погоде из открытого API.
-Room: для локального сохранения данных о погоде.
-WorkManager: для фонового обновления данных о погоде.
-Broadcast Receiver: для уведомлений о значительных изменениях погоды.
-ContentProvider: для предоставления данных о погоде другим приложениям.
+1. Activity: MainActivity с Launch Mode singleTask
+2. Fragments
+3. XML layouts
+4. Jetpack ViewModel
+5. Retrofit + OkHttp: для получения данных о погоде из открытого API.
+6. Room: для локального сохранения данных о погоде.
+7. WorkManager: для фонового обновления данных о погоде.
+8. Broadcast Receiver: для уведомлений о значительных изменениях погоды.
+9. ContentProvider: для предоставления данных о погоде другим приложениям.
 </details>
