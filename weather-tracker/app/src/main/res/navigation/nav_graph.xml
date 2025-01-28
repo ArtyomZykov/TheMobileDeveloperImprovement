@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/currentWeatherFragment">
+
+    <fragment
+        android:id="@+id/currentWeatherFragment"
+        android:name="com.example.weathertracker.presentation.weather.CurrentWeatherFragment"
+        android:label="Current Weather">
+        <action
+            android:id="@+id/action_currentWeather_to_forecast"
+            app:destination="@id/forecastFragment" />
+        <action
+            android:id="@+id/action_currentWeather_to_settings"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forecastFragment"
+        android:name="com.example.weathertracker.presentation.forecast.ForecastFragment"
+        android:label="7 Day Forecast" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.weathertracker.presentation.settings.SettingsFragment"
+        android:label="Settings" />
+</navigation> 
