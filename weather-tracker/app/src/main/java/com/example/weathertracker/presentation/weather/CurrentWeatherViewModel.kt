@@ -1,14 +1,14 @@
 package com.example.weathertracker.presentation.weather
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weathertracker.domain.model.Weather
 import com.example.weathertracker.domain.usecase.GetCurrentWeatherUseCase
 import com.example.weathertracker.domain.usecase.ObserveWeatherUpdatesUseCase
+import com.example.weathertracker.presentation.common.StatefulViewModel
 import com.example.weathertracker.presentation.common.UiState
+import com.example.weathertracker.presentation.weather.CurrentWeatherViewModel.Action
+import com.example.weathertracker.presentation.weather.CurrentWeatherViewModel.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,23 +17,25 @@ import javax.inject.Inject
 class CurrentWeatherViewModel @Inject constructor(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
     private val observeWeatherUpdatesUseCase: ObserveWeatherUpdatesUseCase
-) : ViewModel() {
-
-    val state: StateFlow<UiState<Weather>>
-        field = MutableStateFlow<UiState<Weather>>(UiState.Loading)
+) : StatefulViewModel<UiState<Weather>, Action, Event>(UiState.Loading) {
 
     init {
         observeWeatherUpdates()
         refreshWeather()
     }
 
+    override fun handleAction(action: Action) = when(action) {
+        Action.RefreshWeather -> refreshWeather()
+    }
+
     private fun observeWeatherUpdates() {
         viewModelScope.launch {
+            mutableEvent.send(Event.RefreshWeather)
             observeWeatherUpdatesUseCase()
-                .catch { state.value = UiState.Error(it.message ?: "Unknown error") }
+                .catch { mutableState.value = UiState.Error(it.message ?: "Unknown error") }
                 .collect { weather ->
                     weather?.let {
-                        state.value = UiState.Success(it)
+                        mutableState.value = UiState.Success(it)
                     }
                 }
         }
@@ -41,13 +43,21 @@ class CurrentWeatherViewModel @Inject constructor(
 
     fun refreshWeather() {
         viewModelScope.launch {
-            state.value = UiState.Loading
+            mutableState.value = UiState.Loading
             try {
                 val weather = getCurrentWeatherUseCase()
-                state.value = UiState.Success(weather)
+                mutableState.value = UiState.Success(weather)
             } catch (e: Exception) {
-                state.value = UiState.Error(e.message ?: "Unknown error")
+                mutableState.value = UiState.Error(e.message ?: "Unknown error")
             }
         }
+    }
+
+    sealed class Action {
+        object RefreshWeather : Action()
+    }
+
+    sealed class Event {
+        object RefreshWeather : Event()
     }
 } 
