@@ -2,12 +2,18 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.navigation.safeargs)
 }
 
 hilt {
     enableAggregatingTask = false
+}
+
+kotlin {
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExplicitBackingFields")
+    }
 }
 
 android {
@@ -50,12 +56,8 @@ android {
         viewBinding = true
     }
 
-    kapt {
-        arguments {
-            arg("room.schemaLocation", "$projectDir/schemas")
-            arg("room.incremental", "true")
-            arg("room.expandProjection", "true")
-        }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 }
 
@@ -72,7 +74,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     
     // Retrofit + OkHttp
     implementation(libs.retrofit.core)
@@ -83,7 +85,7 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
     
     // DataStore
     implementation(libs.datastore.preferences)
@@ -107,14 +109,11 @@ dependencies {
 
     // Hilt WorkManager
     implementation(libs.hilt.work)
+    ksp(libs.hilt.work.compiler)
 
     // Play Services Tasks
     implementation(libs.play.services.tasks)
 
     // JavaPoet (для Hilt)
     implementation(libs.javapoet)
-}
-
-kapt {
-    correctErrorTypes = true
 }

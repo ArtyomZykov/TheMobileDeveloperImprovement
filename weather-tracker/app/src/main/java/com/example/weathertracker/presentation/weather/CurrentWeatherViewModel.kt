@@ -19,8 +19,8 @@ class CurrentWeatherViewModel @Inject constructor(
     private val observeWeatherUpdatesUseCase: ObserveWeatherUpdatesUseCase
 ) : ViewModel() {
 
-    private val _weatherState = MutableStateFlow<UiState<Weather>>(UiState.Loading)
-    val weatherState: StateFlow<UiState<Weather>> = _weatherState
+    val state: StateFlow<UiState<Weather>>
+        field = MutableStateFlow<UiState<Weather>>(UiState.Loading)
 
     init {
         observeWeatherUpdates()
@@ -30,10 +30,10 @@ class CurrentWeatherViewModel @Inject constructor(
     private fun observeWeatherUpdates() {
         viewModelScope.launch {
             observeWeatherUpdatesUseCase()
-                .catch { _weatherState.value = UiState.Error(it.message ?: "Unknown error") }
+                .catch { state.value = UiState.Error(it.message ?: "Unknown error") }
                 .collect { weather ->
                     weather?.let {
-                        _weatherState.value = UiState.Success(it)
+                        state.value = UiState.Success(it)
                     }
                 }
         }
@@ -41,12 +41,12 @@ class CurrentWeatherViewModel @Inject constructor(
 
     fun refreshWeather() {
         viewModelScope.launch {
-            _weatherState.value = UiState.Loading
+            state.value = UiState.Loading
             try {
                 val weather = getCurrentWeatherUseCase()
-                _weatherState.value = UiState.Success(weather)
+                state.value = UiState.Success(weather)
             } catch (e: Exception) {
-                _weatherState.value = UiState.Error(e.message ?: "Unknown error")
+                state.value = UiState.Error(e.message ?: "Unknown error")
             }
         }
     }

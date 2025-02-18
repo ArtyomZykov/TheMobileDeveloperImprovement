@@ -15,6 +15,7 @@ class WorkManagerScheduler @Inject constructor(
     private val context: Context,
     private val settingsRepository: SettingsRepository
 ) {
+
     suspend fun scheduleWeatherUpdates() {
         val updateInterval = settingsRepository.getUpdateInterval().first()
         

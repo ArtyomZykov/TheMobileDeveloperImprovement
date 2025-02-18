@@ -9,7 +9,6 @@ import com.example.weathertracker.domain.repository.SettingsRepository
 import com.example.weathertracker.domain.repository.WeatherRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.first
 
 @HiltWorker
 class WeatherUpdateWorker @AssistedInject constructor(

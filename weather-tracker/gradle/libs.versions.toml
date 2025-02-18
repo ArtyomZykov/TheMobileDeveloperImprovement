@@ -1,6 +1,7 @@
 [versions]
 agp = "8.2.2"
-kotlin = "1.9.22"
+kotlin = "2.1.10"
+ksp = "2.1.10-1.0.30"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -9,19 +10,19 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
-hilt = "2.48"
+hilt = "2.50"
 retrofit = "2.9.0"
 okhttp = "4.12.0"
 room = "2.6.1"
-datastore = "1.0.0"
-work = "2.9.0"
-lifecycle = "2.7.0"
-navigation = "2.7.7"
-location = "21.1.0"
+datastore = "1.1.2"
+work = "2.10.0"
+lifecycle = "2.8.7"
+navigation = "2.8.7"
+location = "21.3.0"
 swiperefreshlayout = "1.1.0"
 hilt-work = "1.2.0"
-navigation-safeargs = "2.7.7"
-play-services-tasks = "18.1.0"
+navigation-safeargs = "2.8.7"
+play-services-tasks = "18.2.0"
 javapoet = "1.13.0"
 
 [libraries]
@@ -53,9 +54,11 @@ androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "s
 hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt-work" }
 play-services-tasks = { group = "com.google.android.gms", name = "play-services-tasks", version.ref = "play-services-tasks" }
 javapoet = { group = "com.squareup", name = "javapoet", version.ref = "javapoet" }
+hilt-work-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-work" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation-safeargs" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

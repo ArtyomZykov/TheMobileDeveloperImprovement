@@ -102,7 +102,7 @@ class CurrentWeatherFragment : Fragment() {
     private fun observeWeatherState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.weatherState.collect { state ->
+                viewModel.state.collect { state ->
                     when (state) {
                         is UiState.Loading -> showLoading()
                         is UiState.Success -> showWeather(state.data)
