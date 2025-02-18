@@ -24,13 +24,15 @@ class CurrentWeatherViewModel @Inject constructor(
         refreshWeather()
     }
 
-    override fun handleAction(action: Action) = when(action) {
-        Action.RefreshWeather -> refreshWeather()
+    override fun handleAction(action: Action) = when (action) {
+        Action.OnPullToRefreshTriggered -> refreshWeather()
+        Action.OnForecastButtonClicked -> sendEvent(Event.OpenForecastView)
+        Action.OnSettingsClicked -> sendEvent(Event.OpenSettingsView)
     }
+
 
     private fun observeWeatherUpdates() {
         viewModelScope.launch {
-            mutableEvent.send(Event.RefreshWeather)
             observeWeatherUpdatesUseCase()
                 .catch { mutableState.value = UiState.Error(it.message ?: "Unknown error") }
                 .collect { weather ->
@@ -54,10 +56,13 @@ class CurrentWeatherViewModel @Inject constructor(
     }
 
     sealed class Action {
-        object RefreshWeather : Action()
+        object OnPullToRefreshTriggered : Action()
+        object OnForecastButtonClicked : Action()
+        object OnSettingsClicked : Action()
     }
 
     sealed class Event {
-        object RefreshWeather : Event()
+        object OpenForecastView : Event()
+        object OpenSettingsView : Event()
     }
 } 

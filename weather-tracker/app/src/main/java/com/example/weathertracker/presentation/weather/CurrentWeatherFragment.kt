@@ -1,6 +1,5 @@
 package com.example.weathertracker.presentation.weather
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,6 +19,8 @@ import com.example.weathertracker.R
 import com.example.weathertracker.databinding.FragmentCurrentWeatherBinding
 import com.example.weathertracker.domain.model.Weather
 import com.example.weathertracker.presentation.common.UiState
+import com.example.weathertracker.presentation.weather.CurrentWeatherViewModel.Action
+import com.example.weathertracker.presentation.weather.CurrentWeatherViewModel.Event
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,24 +31,6 @@ class CurrentWeatherFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: CurrentWeatherViewModel by viewModels()
-
-    private val locationPermissionRequest = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        when {
-            permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) ||
-            permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                viewModel.refreshWeather()
-            }
-            else -> {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.error_location_not_available,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,9 +44,8 @@ class CurrentWeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu()
-        setupViews()
-        observeWeatherState()
-        requestLocationPermission()
+        setupListeners()
+        observeViewModel()
     }
 
     private fun setupMenu() {
@@ -73,44 +54,48 @@ class CurrentWeatherFragment : Fragment() {
                 menuInflater.inflate(R.menu.menu_current_weather, menu)
             }
 
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.action_settings -> {
-                        findNavController().navigate(
-                            CurrentWeatherFragmentDirections.actionCurrentWeatherToSettings()
-                        )
-                        true
-                    }
-                    else -> false
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
+                R.id.action_settings -> {
+                    viewModel.handleAction(Action.OnSettingsClicked)
+                    true
                 }
+
+                else -> false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun setupViews() {
+    private fun setupListeners() {
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.refreshWeather()
+            viewModel.handleAction(Action.OnPullToRefreshTriggered)
         }
-
         binding.forecastButton.setOnClickListener {
-            findNavController().navigate(
-                CurrentWeatherFragmentDirections.actionCurrentWeatherToForecast()
-            )
+            viewModel.handleAction(Action.OnForecastButtonClicked)
         }
     }
 
-    private fun observeWeatherState() {
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state ->
-                    when (state) {
-                        is UiState.Loading -> showLoading()
-                        is UiState.Success -> showWeather(state.data)
-                        is UiState.Error -> showError(state.message)
-                    }
-                }
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                launch { viewModel.state.collect(::handleState) }
+                launch { viewModel.event.collect(::handleEvent) }
             }
         }
+    }
+
+    private fun handleState(state: UiState<Weather>) = when (state) {
+        UiState.Loading -> showLoading()
+        is UiState.Error -> showError(state.message)
+        is UiState.Success -> showWeather(state.data)
+    }
+
+    private fun handleEvent(event: Event) = when (event) {
+        Event.OpenForecastView -> findNavController().navigate(
+            CurrentWeatherFragmentDirections.actionCurrentWeatherToForecast()
+        )
+        Event.OpenSettingsView -> findNavController().navigate(
+            CurrentWeatherFragmentDirections.actionCurrentWeatherToSettings()
+        )
     }
 
     private fun showLoading() {
@@ -144,15 +129,6 @@ class CurrentWeatherFragment : Fragment() {
             swipeRefresh.isRefreshing = false
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
         }
-    }
-
-    private fun requestLocationPermission() {
-        locationPermissionRequest.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
     }
 
     override fun onDestroyView() {
