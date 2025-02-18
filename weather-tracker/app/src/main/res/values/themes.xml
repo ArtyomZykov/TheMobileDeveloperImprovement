@@ -7,5 +7,6 @@
 
     <style name="Theme.WeatherTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- ... остальные атрибуты ... -->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

@@ -2,8 +2,8 @@ package com.example.weathertracker.presentation.weather
 
 import androidx.lifecycle.viewModelScope
 import com.example.weathertracker.domain.model.Weather
-import com.example.weathertracker.domain.usecase.GetCurrentWeatherUseCase
-import com.example.weathertracker.domain.usecase.ObserveWeatherUpdatesUseCase
+import com.example.weathertracker.domain.usecase.GetCurrentWeatherFlowUseCase
+import com.example.weathertracker.domain.usecase.SyncCurrentWeatherUseCase
 import com.example.weathertracker.presentation.common.StatefulViewModel
 import com.example.weathertracker.presentation.common.UiState
 import com.example.weathertracker.presentation.weather.CurrentWeatherViewModel.Action
@@ -12,46 +12,55 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.onFailure
 
 @HiltViewModel
 class CurrentWeatherViewModel @Inject constructor(
-    private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
-    private val observeWeatherUpdatesUseCase: ObserveWeatherUpdatesUseCase
+    private val getCurrentWeatherFlowUseCase: GetCurrentWeatherFlowUseCase,
+    private val syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase,
 ) : StatefulViewModel<UiState<Weather>, Action, Event>(UiState.Loading) {
 
     init {
-        observeWeatherUpdates()
-        refreshWeather()
+        observeWeather()
+        syncWeather()
     }
 
-    override fun handleAction(action: Action) = when (action) {
-        Action.OnPullToRefreshTriggered -> refreshWeather()
-        Action.OnForecastButtonClicked -> sendEvent(Event.OpenForecastView)
-        Action.OnSettingsClicked -> sendEvent(Event.OpenSettingsView)
-    }
-
-
-    private fun observeWeatherUpdates() {
-        viewModelScope.launch {
-            observeWeatherUpdatesUseCase()
-                .catch { mutableState.value = UiState.Error(it.message ?: "Unknown error") }
-                .collect { weather ->
-                    weather?.let {
-                        mutableState.value = UiState.Success(it)
-                    }
-                }
+    override fun handleAction(action: Action) {
+        when (action) {
+            Action.OnPullToRefreshTriggered -> refreshWeather()
+            Action.OnForecastButtonClicked -> sendEvent(Event.OpenForecastScreen)
+            Action.OnSettingsClicked -> sendEvent(Event.OpenSettingsScreen)
         }
     }
 
-    fun refreshWeather() {
-        viewModelScope.launch {
-            mutableState.value = UiState.Loading
-            try {
-                val weather = getCurrentWeatherUseCase()
-                mutableState.value = UiState.Success(weather)
-            } catch (e: Exception) {
-                mutableState.value = UiState.Error(e.message ?: "Unknown error")
+    private fun observeWeather() = viewModelScope.launch {
+        getCurrentWeatherFlowUseCase()
+            .catch {
+                mutableState.value = UiState.Error("Get cashed current weather")
             }
+            .collect { weather ->
+                if (weather == null) {
+                    mutableState.value = UiState.Error("Error sync current weather")
+                } else {
+                    mutableState.value = UiState.Success(weather)
+                }
+            }
+    }
+
+    private fun syncWeather() = viewModelScope.launch {
+        runCatching {
+            syncCurrentWeatherUseCase()
+        }.onFailure {
+            sendEvent(Event.ShowSyncErrorView)
+        }
+    }
+
+    fun refreshWeather() = viewModelScope.launch {
+        runCatching {
+            // TODO: Update refresh view state after end of request
+            syncCurrentWeatherUseCase()
+        }.onFailure { throwable ->
+            mutableState.value = UiState.Error("Error refresh current weather")
         }
     }
 
@@ -62,7 +71,8 @@ class CurrentWeatherViewModel @Inject constructor(
     }
 
     sealed class Event {
-        object OpenForecastView : Event()
-        object OpenSettingsView : Event()
+        object OpenForecastScreen : Event()
+        object OpenSettingsScreen : Event()
+        object ShowSyncErrorView : Event()
     }
 } 

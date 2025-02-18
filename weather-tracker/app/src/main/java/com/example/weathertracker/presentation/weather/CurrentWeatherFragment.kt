@@ -48,21 +48,9 @@ class CurrentWeatherFragment : Fragment() {
         observeViewModel()
     }
 
-    private fun setupMenu() {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_current_weather, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
-                R.id.action_settings -> {
-                    viewModel.handleAction(Action.OnSettingsClicked)
-                    true
-                }
-
-                else -> false
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setupListeners() {
@@ -90,12 +78,17 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     private fun handleEvent(event: Event) = when (event) {
-        Event.OpenForecastView -> findNavController().navigate(
+        Event.OpenForecastScreen -> findNavController().navigate(
             CurrentWeatherFragmentDirections.actionCurrentWeatherToForecast()
         )
-        Event.OpenSettingsView -> findNavController().navigate(
+
+        Event.OpenSettingsScreen -> findNavController().navigate(
             CurrentWeatherFragmentDirections.actionCurrentWeatherToSettings()
         )
+
+        Event.ShowSyncErrorView -> {
+            Toast.makeText(requireContext(), "Synс error. Data may not be up to date", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun showLoading() {
@@ -105,6 +98,25 @@ class CurrentWeatherFragment : Fragment() {
             descriptionText.visibility = View.INVISIBLE
             forecastButton.visibility = View.INVISIBLE
         }
+    }
+
+    // region Ui
+
+    private fun setupMenu() {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_current_weather, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
+                R.id.action_settings -> {
+                    viewModel.handleAction(Action.OnSettingsClicked)
+                    true
+                }
+
+                else -> false
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun showWeather(weather: Weather) {
@@ -130,9 +142,5 @@ class CurrentWeatherFragment : Fragment() {
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    // endregion Ui
 } 

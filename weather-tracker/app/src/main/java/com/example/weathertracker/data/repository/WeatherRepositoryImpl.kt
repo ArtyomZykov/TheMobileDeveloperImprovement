@@ -9,16 +9,15 @@ import com.example.weathertracker.data.mapper.toForecastEntity
 import com.example.weathertracker.data.mapper.toWeather
 import com.example.weathertracker.data.mapper.toWeatherEntity
 import com.example.weathertracker.domain.model.DailyForecast
-import com.example.weathertracker.domain.model.Location
 import com.example.weathertracker.domain.model.Weather
 import com.example.weathertracker.domain.repository.WeatherRepository
 import com.example.weathertracker.util.NetworkUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import java.io.IOException
 import com.example.weathertracker.data.db.entity.WeatherEntity
 import com.example.weathertracker.data.db.entity.ForecastEntity
+import com.example.weathertracker.domain.model.Location
 
 class WeatherRepositoryImpl @Inject constructor(
     private val api: OpenWeatherApi,
@@ -27,13 +26,13 @@ class WeatherRepositoryImpl @Inject constructor(
     private val networkUtils: NetworkUtils
 ) : WeatherRepository {
 
-    override suspend fun getCurrentWeather(location: Location): Weather {
-        if (!networkUtils.isNetworkAvailable()) {
-            throw IOException("No network connection")
-        }
+    override suspend fun getRemoteCurrentWeather(): Weather {
+//        if (!networkUtils.isNetworkAvailable()) {
+//            throw IOException("No network connection")
+//        }
         val response = api.getCurrentWeather(
-            latitude = location.latitude,
-            longitude = location.longitude,
+            latitude = MOSCOW_LOCATION.latitude,
+            longitude = MOSCOW_LOCATION.longitude,
             apiKey = BuildConfig.WEATHER_API_KEY
         )
         val weatherEntity = response.toWeatherEntity()
@@ -41,13 +40,13 @@ class WeatherRepositoryImpl @Inject constructor(
         return weatherEntity.toWeather()
     }
 
-    override suspend fun getDailyForecast(location: Location): List<DailyForecast> {
-        if (!networkUtils.isNetworkAvailable()) {
-            throw IOException("No network connection")
-        }
+    override suspend fun getDailyForecast(): List<DailyForecast> {
+//        if (!networkUtils.isNetworkAvailable()) {
+//            throw IOException("No network connection")
+//        }
         val response = api.getDailyForecast(
-            latitude = location.latitude,
-            longitude = location.longitude,
+            latitude = MOSCOW_LOCATION.latitude,
+            longitude = MOSCOW_LOCATION.longitude,
             apiKey = BuildConfig.WEATHER_API_KEY
         )
         
@@ -61,7 +60,7 @@ class WeatherRepositoryImpl @Inject constructor(
         return dailyForecasts.map { it.toDailyForecast() }
     }
 
-    override fun getLastKnownWeather(): Flow<Weather?> {
+    override fun getCashedWeather(): Flow<Weather?> {
         return weatherDao.getLastWeather().map { it?.toWeather() }
     }
 
@@ -71,7 +70,7 @@ class WeatherRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateWeatherCache(weather: Weather) {
+    override suspend fun cacheWeather(weather: Weather) {
         weatherDao.insertWeather(
             WeatherEntity(
                 id = weather.id,
@@ -102,5 +101,9 @@ class WeatherRepositoryImpl @Inject constructor(
                 )
             }
         )
+    }
+
+    private companion object {
+        private val MOSCOW_LOCATION = Location(latitude = 55.7558, longitude = 37.6173)
     }
 } 

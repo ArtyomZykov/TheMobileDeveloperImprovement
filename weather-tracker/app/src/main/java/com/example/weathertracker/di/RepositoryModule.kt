@@ -1,9 +1,7 @@
 package com.example.weathertracker.di
 
-import com.example.weathertracker.data.repository.LocationRepositoryImpl
 import com.example.weathertracker.data.repository.SettingsRepositoryImpl
 import com.example.weathertracker.data.repository.WeatherRepositoryImpl
-import com.example.weathertracker.domain.repository.LocationRepository
 import com.example.weathertracker.domain.repository.SettingsRepository
 import com.example.weathertracker.domain.repository.WeatherRepository
 import dagger.Binds
@@ -21,12 +19,6 @@ abstract class RepositoryModule {
     abstract fun bindWeatherRepository(
         weatherRepositoryImpl: WeatherRepositoryImpl
     ): WeatherRepository
-
-    @Binds
-    @Singleton
-    abstract fun bindLocationRepository(
-        locationRepositoryImpl: LocationRepositoryImpl
-    ): LocationRepository
 
     @Binds
     @Singleton
