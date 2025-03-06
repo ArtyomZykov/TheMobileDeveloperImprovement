@@ -9,7 +9,7 @@ interface WeatherRepository {
     fun getCashedWeather(): Flow<Weather?>
     suspend fun cacheWeather(weather: Weather)
 
-    suspend fun getDailyForecast(): List<DailyForecast>
-    fun getDailyForecastFromCache(): Flow<List<DailyForecast>>
-    suspend fun updateForecastCache(forecast: List<DailyForecast>)
+    suspend fun getRemoteDailyForecast(): List<DailyForecast>
+    fun getCashedDailyForecast(): Flow<List<DailyForecast>>
+    suspend fun cacheDailyForecast(forecast: List<DailyForecast>)
 } 

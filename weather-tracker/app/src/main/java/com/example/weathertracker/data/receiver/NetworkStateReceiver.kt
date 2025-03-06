@@ -24,8 +24,7 @@ class NetworkStateReceiver : BroadcastReceiver() {
             val network = connectivityManager.activeNetwork
             val capabilities = connectivityManager.getNetworkCapabilities(network)
 
-            val isConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                ?: false
+            val isConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
 
             if (isConnected) {
                 // Запускаем обновление при восстановлении подключения

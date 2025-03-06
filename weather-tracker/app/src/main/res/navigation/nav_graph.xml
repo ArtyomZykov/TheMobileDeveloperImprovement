@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/forecastFragment"
         android:name="com.example.weathertracker.presentation.forecast.ForecastFragment"
-        android:label="7 Day Forecast" />
+        android:label="5 Day Forecast" />
 
     <fragment
         android:id="@+id/settingsFragment"

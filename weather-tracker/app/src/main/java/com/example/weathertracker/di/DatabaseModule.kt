@@ -39,4 +39,4 @@ object DatabaseModule {
     fun provideForecastDao(database: WeatherDatabase): ForecastDao {
         return database.forecastDao()
     }
-} 
+}

@@ -25,4 +25,4 @@ abstract class RepositoryModule {
     abstract fun bindSettingsRepository(
         settingsRepositoryImpl: SettingsRepositoryImpl
     ): SettingsRepository
-} 
+}

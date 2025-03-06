@@ -10,23 +10,37 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.Locale
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    
+
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = if (BuildConfig.DEBUG) {
-                    HttpLoggingInterceptor.Level.BODY
-                } else {
-                    HttpLoggingInterceptor.Level.NONE
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    level = if (BuildConfig.DEBUG) {
+                        HttpLoggingInterceptor.Level.BODY
+                    } else {
+                        HttpLoggingInterceptor.Level.NONE
+                    }
                 }
-            })
+            )
+            .addInterceptor {
+                val original = it.request()
+                val url = original.url.newBuilder()
+                    .addQueryParameter("appid", BuildConfig.WEATHER_API_KEY)
+                    .addQueryParameter("lang", Locale.getDefault().language)
+                    .build()
+                val request = original.newBuilder()
+                    .url(url)
+                    .build()
+                it.proceed(request)
+            }
             .build()
     }
 
@@ -34,7 +48,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/data/2.5/")
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -45,4 +59,4 @@ object NetworkModule {
     fun provideOpenWeatherApi(retrofit: Retrofit): OpenWeatherApi {
         return retrofit.create(OpenWeatherApi::class.java)
     }
-} 
+}

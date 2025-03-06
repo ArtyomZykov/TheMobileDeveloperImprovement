@@ -18,6 +18,7 @@ import javax.inject.Inject
 import com.example.weathertracker.data.db.entity.WeatherEntity
 import com.example.weathertracker.data.db.entity.ForecastEntity
 import com.example.weathertracker.domain.model.Location
+import java.util.Date
 
 class WeatherRepositoryImpl @Inject constructor(
     private val api: OpenWeatherApi,
@@ -33,27 +34,20 @@ class WeatherRepositoryImpl @Inject constructor(
         val response = api.getCurrentWeather(
             latitude = MOSCOW_LOCATION.latitude,
             longitude = MOSCOW_LOCATION.longitude,
-            apiKey = BuildConfig.WEATHER_API_KEY
         )
         val weatherEntity = response.toWeatherEntity()
         weatherDao.insertWeather(weatherEntity)
         return weatherEntity.toWeather()
     }
 
-    override suspend fun getDailyForecast(): List<DailyForecast> {
-//        if (!networkUtils.isNetworkAvailable()) {
-//            throw IOException("No network connection")
-//        }
+    override suspend fun getRemoteDailyForecast(): List<DailyForecast> {
         val response = api.getDailyForecast(
             latitude = MOSCOW_LOCATION.latitude,
             longitude = MOSCOW_LOCATION.longitude,
-            apiKey = BuildConfig.WEATHER_API_KEY
         )
         
-        // Группируем прогнозы по дням и берем первый прогноз для каждого дня
-        val dailyForecasts = response.list
-            .groupBy { it.dateText.substring(0, 10) } // Группируем по дате (YYYY-MM-DD)
-            .map { it.value.first() } // Берем первый прогноз для каждого дня
+        val dailyForecasts: List<ForecastEntity> = response
+            .list
             .map { it.toForecastEntity() }
         
         forecastDao.insertForecasts(dailyForecasts)
@@ -64,7 +58,7 @@ class WeatherRepositoryImpl @Inject constructor(
         return weatherDao.getLastWeather().map { it?.toWeather() }
     }
 
-    override fun getDailyForecastFromCache(): Flow<List<DailyForecast>> {
+    override fun getCashedDailyForecast(): Flow<List<DailyForecast>> {
         return forecastDao.getAllForecasts().map { entities ->
             entities.map { it.toDailyForecast() }
         }
@@ -86,7 +80,7 @@ class WeatherRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun updateForecastCache(forecast: List<DailyForecast>) {
+    override suspend fun cacheDailyForecast(forecast: List<DailyForecast>) {
         forecastDao.insertForecasts(
             forecast.map {
                 ForecastEntity(

@@ -89,8 +89,14 @@ class CurrentWeatherFragment : Fragment() {
         Event.ShowSyncErrorView -> {
             Toast.makeText(requireContext(), "Synс error. Data may not be up to date", Toast.LENGTH_LONG).show()
         }
+
+        Event.HideRefreshView -> {
+            viewModel.onStateObserved()
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
+    // region Ui
     private fun showLoading() {
         binding.apply {
             progressBar.visibility = View.VISIBLE
@@ -99,8 +105,6 @@ class CurrentWeatherFragment : Fragment() {
             forecastButton.visibility = View.INVISIBLE
         }
     }
-
-    // region Ui
 
     private fun setupMenu() {
         requireActivity().addMenuProvider(object : MenuProvider {

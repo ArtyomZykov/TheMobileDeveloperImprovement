@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Weather Tracker</string>
     <string name="temperature_format">%.1f°C</string>
-    <string name="forecast_button">7 Day Forecast</string>
+    <string name="forecast_button">5 Day Forecast</string>
     <string name="error_location_not_available">Location not available</string>
     <string name="error_network">Network error. Please try again</string>
     <string name="error_unknown">Unknown error occurred</string>

@@ -8,6 +8,6 @@ class GetDailyForecastUseCase @Inject constructor(
     private val weatherRepository: WeatherRepository,
 ) {
     suspend operator fun invoke(): List<DailyForecast> {
-        return weatherRepository.getDailyForecast()
+        return weatherRepository.getRemoteDailyForecast()
     }
 } 

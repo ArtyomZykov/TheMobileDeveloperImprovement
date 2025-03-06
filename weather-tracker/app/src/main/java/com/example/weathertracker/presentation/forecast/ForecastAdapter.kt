@@ -11,14 +11,15 @@ import com.example.weathertracker.domain.model.DailyForecast
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class ForecastAdapter : ListAdapter<DailyForecast, ForecastAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemForecastBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+            /* inflater = */        LayoutInflater.from(parent.context),
+            /* parent = */          parent,
+            /* attachToParent = */  false
         )
         return ViewHolder(binding)
     }
@@ -31,11 +32,9 @@ class ForecastAdapter : ListAdapter<DailyForecast, ForecastAdapter.ViewHolder>(D
         private val binding: ItemForecastBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val dateFormat = SimpleDateFormat("EEEE, MMM d", Locale.getDefault())
-
         fun bind(forecast: DailyForecast) {
             binding.apply {
-                dateText.text = dateFormat.format(Date(forecast.date * 1000))
+                dateText.text = convertUnixTimestampToDate(forecast.date)
                 temperatureText.text = itemView.context.getString(
                     R.string.temperature_range_format,
                     forecast.maxTemp,
@@ -43,6 +42,13 @@ class ForecastAdapter : ListAdapter<DailyForecast, ForecastAdapter.ViewHolder>(D
                 )
                 descriptionText.text = forecast.description
             }
+        }
+
+        private fun convertUnixTimestampToDate(timestamp: Long): String {
+            val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+            sdf.timeZone = TimeZone.getDefault()
+            val date = Date(timestamp * 1_000) // Multiply by 1000 because the timestamp is in seconds
+            return sdf.format(date)
         }
     }
 
@@ -55,4 +61,4 @@ class ForecastAdapter : ListAdapter<DailyForecast, ForecastAdapter.ViewHolder>(D
             return oldItem == newItem
         }
     }
-} 
+}

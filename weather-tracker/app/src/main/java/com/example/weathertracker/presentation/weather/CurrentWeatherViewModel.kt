@@ -20,7 +20,7 @@ class CurrentWeatherViewModel @Inject constructor(
     private val syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase,
 ) : StatefulViewModel<UiState<Weather>, Action, Event>(UiState.Loading) {
 
-    init {
+    override fun onStateObserved() {
         observeWeather()
         syncWeather()
     }
@@ -56,11 +56,12 @@ class CurrentWeatherViewModel @Inject constructor(
     }
 
     fun refreshWeather() = viewModelScope.launch {
-        runCatching {
-            // TODO: Update refresh view state after end of request
+        try {
             syncCurrentWeatherUseCase()
-        }.onFailure { throwable ->
+        } catch (_: Exception) {
             mutableState.value = UiState.Error("Error refresh current weather")
+        } finally {
+            sendEvent(Event.HideRefreshView)
         }
     }
 
@@ -74,5 +75,6 @@ class CurrentWeatherViewModel @Inject constructor(
         object OpenForecastScreen : Event()
         object OpenSettingsScreen : Event()
         object ShowSyncErrorView : Event()
+        object HideRefreshView : Event()
     }
 } 

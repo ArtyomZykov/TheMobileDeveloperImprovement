@@ -20,10 +20,10 @@ class WeatherUpdateWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         return try {
             val weather = weatherRepository.getRemoteCurrentWeather()
-            val forecast = weatherRepository.getDailyForecast()
+            val forecast = weatherRepository.getRemoteDailyForecast()
             
             weatherRepository.cacheWeather(weather)
-            weatherRepository.updateForecastCache(forecast)
+            weatherRepository.cacheDailyForecast(forecast)
             
             Result.success()
         } catch (e: Exception) {
