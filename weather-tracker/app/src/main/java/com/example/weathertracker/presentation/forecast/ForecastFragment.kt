@@ -11,7 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.weathertracker.databinding.FragmentForecastBinding
-import com.example.weathertracker.domain.model.DailyForecast
+import com.example.weathertracker.domain.model.DailyForecastEntity
 import com.example.weathertracker.presentation.common.UiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -37,7 +37,7 @@ class ForecastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-        observeForecastState()
+        observeViewModel()
     }
 
     private fun setupViews() {
@@ -47,17 +47,27 @@ class ForecastFragment : Fragment() {
         }
     }
 
-    private fun observeForecastState() {
+    private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.forecastState.collect { state ->
-                    when (state) {
-                        is UiState.Loading -> showLoading()
-                        is UiState.Success -> showForecast(state.data)
-                        is UiState.Error -> showError(state.message)
-                    }
-                }
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                launch { viewModel.state.collect(::handleState) }
+                launch { viewModel.event.collect(::handleEvent) }
             }
+        }
+    }
+
+    private fun handleState(state: UiState<List<DailyForecastEntity>>) {
+        when (state) {
+            is UiState.Loading -> showLoading()
+            is UiState.Success -> showForecast(state.data)
+            is UiState.Error -> showError(state.message)
+        }
+    }
+
+    private fun handleEvent(event: ForecastViewModel.Event) {
+        when (event) {
+            is ForecastViewModel.Event.ShowSyncErrorView -> showError("Sync error")
+            ForecastViewModel.Event.HideRefreshView -> binding.swipeRefresh.isRefreshing = false
         }
     }
 
@@ -68,7 +78,7 @@ class ForecastFragment : Fragment() {
         }
     }
 
-    private fun showForecast(forecast: List<DailyForecast>) {
+    private fun showForecast(forecast: List<DailyForecastEntity>) {
         binding.apply {
             progressBar.visibility = View.GONE
             swipeRefresh.isRefreshing = false
@@ -89,4 +99,4 @@ class ForecastFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-} 
+}

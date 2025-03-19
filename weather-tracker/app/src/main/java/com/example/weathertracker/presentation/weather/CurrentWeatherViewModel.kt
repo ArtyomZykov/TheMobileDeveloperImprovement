@@ -1,7 +1,7 @@
 package com.example.weathertracker.presentation.weather
 
 import androidx.lifecycle.viewModelScope
-import com.example.weathertracker.domain.model.Weather
+import com.example.weathertracker.domain.model.WeatherEntity
 import com.example.weathertracker.domain.usecase.GetCurrentWeatherFlowUseCase
 import com.example.weathertracker.domain.usecase.SyncCurrentWeatherUseCase
 import com.example.weathertracker.presentation.common.StatefulViewModel
@@ -18,7 +18,7 @@ import kotlin.onFailure
 class CurrentWeatherViewModel @Inject constructor(
     private val getCurrentWeatherFlowUseCase: GetCurrentWeatherFlowUseCase,
     private val syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase,
-) : StatefulViewModel<UiState<Weather>, Action, Event>(UiState.Loading) {
+) : StatefulViewModel<UiState<WeatherEntity>, Action, Event>(UiState.Loading) {
 
     override fun onStateObserved() {
         observeWeather()
@@ -36,7 +36,7 @@ class CurrentWeatherViewModel @Inject constructor(
     private fun observeWeather() = viewModelScope.launch {
         getCurrentWeatherFlowUseCase()
             .catch {
-                mutableState.value = UiState.Error("Get cashed current weather")
+                mutableState.value = UiState.Error("Get cashed current weather error")
             }
             .collect { weather ->
                 if (weather == null) {

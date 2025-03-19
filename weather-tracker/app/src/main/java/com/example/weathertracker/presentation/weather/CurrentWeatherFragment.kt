@@ -17,7 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.weathertracker.R
 import com.example.weathertracker.databinding.FragmentCurrentWeatherBinding
-import com.example.weathertracker.domain.model.Weather
+import com.example.weathertracker.domain.model.WeatherEntity
 import com.example.weathertracker.presentation.common.UiState
 import com.example.weathertracker.presentation.weather.CurrentWeatherViewModel.Action
 import com.example.weathertracker.presentation.weather.CurrentWeatherViewModel.Event
@@ -71,7 +71,7 @@ class CurrentWeatherFragment : Fragment() {
         }
     }
 
-    private fun handleState(state: UiState<Weather>) = when (state) {
+    private fun handleState(state: UiState<WeatherEntity>) = when (state) {
         UiState.Loading -> showLoading()
         is UiState.Error -> showError(state.message)
         is UiState.Success -> showWeather(state.data)
@@ -91,7 +91,6 @@ class CurrentWeatherFragment : Fragment() {
         }
 
         Event.HideRefreshView -> {
-            viewModel.onStateObserved()
             binding.swipeRefresh.isRefreshing = false
         }
     }
@@ -123,7 +122,7 @@ class CurrentWeatherFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun showWeather(weather: Weather) {
+    private fun showWeather(weather: WeatherEntity) {
         binding.apply {
             progressBar.visibility = View.GONE
             swipeRefresh.isRefreshing = false

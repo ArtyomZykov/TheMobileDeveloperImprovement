@@ -27,12 +27,12 @@ class NetworkStateReceiver : BroadcastReceiver() {
             val isConnected = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
 
             if (isConnected) {
-                // Запускаем обновление при восстановлении подключения
+                // Running an update when reconnection is restored
                 workManager.enqueueUniquePeriodicWork(
                     WeatherUpdateWorker.WORK_NAME,
                     androidx.work.ExistingPeriodicWorkPolicy.KEEP,
                     androidx.work.PeriodicWorkRequestBuilder<WeatherUpdateWorker>(
-                        15, // Минимальный интервал
+                        15, // Min interval
                         java.util.concurrent.TimeUnit.MINUTES
                     ).build()
                 )

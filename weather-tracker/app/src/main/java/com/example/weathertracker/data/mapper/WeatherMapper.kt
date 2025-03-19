@@ -2,12 +2,12 @@ package com.example.weathertracker.data.mapper
 
 import com.example.weathertracker.data.api.model.CurrentWeatherResponse
 import com.example.weathertracker.data.api.model.ForecastResponse
-import com.example.weathertracker.data.db.entity.ForecastEntity
-import com.example.weathertracker.data.db.entity.WeatherEntity
-import com.example.weathertracker.domain.model.DailyForecast
-import com.example.weathertracker.domain.model.Weather
+import com.example.weathertracker.data.db.entity.ForecastDbEntity
+import com.example.weathertracker.data.db.entity.WeatherDbEntity
+import com.example.weathertracker.domain.model.DailyForecastEntity
+import com.example.weathertracker.domain.model.WeatherEntity
 
-fun CurrentWeatherResponse.toWeatherEntity() = WeatherEntity(
+fun CurrentWeatherResponse.toWeatherDbEntity() = WeatherDbEntity(
     id = id,
     temperature = mainInfo.temp,
     feelsLike = mainInfo.feelsLike,
@@ -19,7 +19,7 @@ fun CurrentWeatherResponse.toWeatherEntity() = WeatherEntity(
     timestamp = dt
 )
 
-fun WeatherEntity.toWeather() = Weather(
+fun WeatherDbEntity.toWeatherEntity() = WeatherEntity(
     id = id,
     temperature = temperature,
     feelsLike = feelsLike,
@@ -31,8 +31,8 @@ fun WeatherEntity.toWeather() = Weather(
     timestamp = timestamp
 )
 
-fun ForecastResponse.ForecastItem.toForecastEntity(): ForecastEntity {
-    return ForecastEntity(
+fun ForecastResponse.ForecastItem.toForecastDbEntity(): ForecastDbEntity {
+    return ForecastDbEntity(
         date = dt,
         minTemp = main.tempMin,
         maxTemp = main.tempMax,
@@ -44,7 +44,7 @@ fun ForecastResponse.ForecastItem.toForecastEntity(): ForecastEntity {
     )
 }
 
-fun ForecastEntity.toDailyForecast() = DailyForecast(
+fun ForecastDbEntity.toDailyForecastEntity() = DailyForecastEntity(
     date = date,
     minTemp = minTemp,
     maxTemp = maxTemp,

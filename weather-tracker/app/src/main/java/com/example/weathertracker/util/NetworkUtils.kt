@@ -8,6 +8,7 @@ import javax.inject.Inject
 class NetworkUtils @Inject constructor(
     private val context: Context
 ) {
+
     fun isNetworkAvailable(): Boolean {
         val connectivityManager = 
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -17,4 +18,4 @@ class NetworkUtils @Inject constructor(
 
         return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: false
     }
-} 
+}

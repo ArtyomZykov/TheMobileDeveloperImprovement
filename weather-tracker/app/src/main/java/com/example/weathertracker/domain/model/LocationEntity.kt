@@ -1,6 +1,6 @@
 package com.example.weathertracker.domain.model
 
-data class Location(
+data class LocationEntity(
     val latitude: Double,
     val longitude: Double
 ) 
