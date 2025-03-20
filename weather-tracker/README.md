@@ -17,11 +17,7 @@
 4. Хардкод горорода Москва.
 
 Экраны:
-1. CurrentWeatherFragment
-   <img src="gitResources/currentWeatherScreen.png" style="width: 300;">
 
-2. ForecastFragment
-   <img src="gitResources/dailyWeatherScreen.png" style="width: 300;">
-
-3. SettingsFragment
-   <img src="gitResources/settingsScreen.png" style="width: 300;">
+| CurrentWeatherFragment | ForecastFragment | SettingsFragment |
+|----------------------|------------------|------------------|
+| <img src="gitResources/currentWeatherScreen.png" width="300"> | <img src="gitResources/dailyWeatherScreen.png" width="300"> | <img src="gitResources/settingsScreen.png" width="300"> |
