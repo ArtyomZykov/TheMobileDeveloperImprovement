@@ -3,7 +3,6 @@ package com.example.weathertracker.presentation.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weathertracker.domain.repository.SettingsRepository
-import com.example.weathertracker.domain.repository.TemperatureUnit
 import com.example.weathertracker.work.WorkManagerScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,25 +17,12 @@ class SettingsViewModel @Inject constructor(
     private val workManagerScheduler: WorkManagerScheduler
 ) : ViewModel() {
 
-    val temperatureUnit: StateFlow<TemperatureUnit> = settingsRepository.getTemperatureUnit()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            TemperatureUnit.CELSIUS
-        )
-
     val updateInterval: StateFlow<Long> = settingsRepository.getUpdateInterval()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            30L
+            30L,
         )
-
-    fun setTemperatureUnit(unit: TemperatureUnit) {
-        viewModelScope.launch {
-            settingsRepository.setTemperatureUnit(unit)
-        }
-    }
 
     fun setUpdateInterval(minutes: Long) {
         viewModelScope.launch {
@@ -44,4 +30,4 @@ class SettingsViewModel @Inject constructor(
             workManagerScheduler.scheduleWeatherUpdates()
         }
     }
-} 
+}

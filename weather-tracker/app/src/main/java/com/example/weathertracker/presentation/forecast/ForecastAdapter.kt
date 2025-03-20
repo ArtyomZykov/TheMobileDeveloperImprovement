@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weathertracker.R
 import com.example.weathertracker.databinding.ItemForecastBinding
 import com.example.weathertracker.domain.model.DailyForecastEntity
+import com.example.weathertracker.util.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -34,7 +35,7 @@ class ForecastAdapter : ListAdapter<DailyForecastEntity, ForecastAdapter.ViewHol
 
         fun bind(forecast: DailyForecastEntity) {
             binding.apply {
-                dateText.text = convertUnixTimestampToDate(forecast.date)
+                dateText.text = Timestamp.convertUnixTimestampToDate(forecast.date)
                 temperatureText.text = itemView.context.getString(
                     R.string.temperature_range_format,
                     forecast.maxTemp,
@@ -42,13 +43,6 @@ class ForecastAdapter : ListAdapter<DailyForecastEntity, ForecastAdapter.ViewHol
                 )
                 descriptionText.text = forecast.description
             }
-        }
-
-        private fun convertUnixTimestampToDate(timestamp: Long): String {
-            val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-            sdf.timeZone = TimeZone.getDefault()
-            val date = Date(timestamp * 1_000) // Multiply by 1000 because the timestamp is in seconds
-            return sdf.format(date)
         }
     }
 

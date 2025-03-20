@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.weathertracker.R
 import com.example.weathertracker.databinding.FragmentSettingsBinding
-import com.example.weathertracker.domain.repository.TemperatureUnit
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -42,16 +41,6 @@ class SettingsFragment : Fragment() {
 
     private fun setupViews() {
         binding.apply {
-            temperatureUnitGroup.setOnCheckedChangeListener { _, checkedId ->
-                val unit = when (checkedId) {
-                    R.id.celsiusRadio -> TemperatureUnit.CELSIUS
-                    R.id.fahrenheitRadio -> TemperatureUnit.FAHRENHEIT
-                    else -> return@setOnCheckedChangeListener
-                }
-                viewModel.setTemperatureUnit(unit)
-                showSettingsSaved()
-            }
-
             updateIntervalSlider.addOnChangeListener { _, value, fromUser ->
                 if (fromUser) {
                     updateIntervalText.text = getString(
@@ -75,17 +64,6 @@ class SettingsFragment : Fragment() {
     private fun observeSettings() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.temperatureUnit.collect { unit ->
-                        binding.temperatureUnitGroup.check(
-                            when (unit) {
-                                TemperatureUnit.CELSIUS -> R.id.celsiusRadio
-                                TemperatureUnit.FAHRENHEIT -> R.id.fahrenheitRadio
-                            }
-                        )
-                    }
-                }
-
                 launch {
                     viewModel.updateInterval.collect { interval ->
                         binding.apply {

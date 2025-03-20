@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.weathertracker.work.WeatherUpdateWorker
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,11 +31,11 @@ class NetworkStateReceiver : BroadcastReceiver() {
             if (isConnected) {
                 // Running an update when reconnection is restored
                 workManager.enqueueUniquePeriodicWork(
-                    WeatherUpdateWorker.WORK_NAME,
-                    androidx.work.ExistingPeriodicWorkPolicy.KEEP,
-                    androidx.work.PeriodicWorkRequestBuilder<WeatherUpdateWorker>(
-                        15, // Min interval
-                        java.util.concurrent.TimeUnit.MINUTES
+                    uniqueWorkName = WeatherUpdateWorker.WORK_NAME,
+                    existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+                    request = PeriodicWorkRequestBuilder<WeatherUpdateWorker>(
+                        repeatInterval = 15, // Min interval
+                        repeatIntervalTimeUnit = java.util.concurrent.TimeUnit.MINUTES
                     ).build()
                 )
             }

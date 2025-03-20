@@ -17,23 +17,23 @@ class WorkManagerScheduler @Inject constructor(
 ) {
 
     suspend fun scheduleWeatherUpdates() {
-        val updateInterval = settingsRepository.getUpdateInterval().first()
-        
+         val updateInterval = settingsRepository.getUpdateInterval().first()
+
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
         val weatherUpdateRequest = PeriodicWorkRequestBuilder<WeatherUpdateWorker>(
-            updateInterval,
-            TimeUnit.MINUTES
+            repeatInterval = updateInterval,
+            repeatIntervalTimeUnit = TimeUnit.MINUTES
         )
             .setConstraints(constraints)
             .build()
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            WeatherUpdateWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            weatherUpdateRequest
+            uniqueWorkName = WeatherUpdateWorker.WORK_NAME,
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.UPDATE,
+            request = weatherUpdateRequest,
         )
     }
 
