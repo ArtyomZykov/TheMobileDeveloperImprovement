@@ -64,9 +64,11 @@ Kotlin
 
 
 <details close>
-<summary>Точки контроля 1-3. [weather-tracker](https://github.com/ArtyomZykov/TheMobileDeveloperImprovement/tree/master/weather-tracker)</summary>
+<summary>Точки контроля 1-3. weather-tracker</summary>
 <br>
 Было прнято решение объеденить 3 точки контроя в одно прилодение. Weather Tracker позволяет пользователям получать текущую информацию о погоде и прогноз на несколько дней вперед для выбранного города. Приложение также поддерживает фоновую работу для обновления данных о погоде и уведомления о значительных изменениях.
+
+https://github.com/ArtyomZykov/TheMobileDeveloperImprovement/tree/master/weather-tracker
 
 Стек:
 1. Activity: MainActivity с Launch Mode singleTask
