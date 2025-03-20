@@ -6,10 +6,6 @@ plugins {
     alias(libs.plugins.navigation.safeargs)
 }
 
-hilt {
-    enableAggregatingTask = false
-}
-
 kotlin {
     sourceSets.all {
         languageSettings.enableLanguageFeature("ExplicitBackingFields")
@@ -76,7 +72,7 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    
+
     // Retrofit + OkHttp
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)

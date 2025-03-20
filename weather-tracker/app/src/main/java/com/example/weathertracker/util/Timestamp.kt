@@ -7,7 +7,7 @@ import java.util.TimeZone
 
 object Timestamp {
 
-    public fun convertUnixTimestampToDate(timestamp: Long): String {
+    fun convertUnixTimestampToDate(timestamp: Long): String {
         val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         sdf.timeZone = TimeZone.getDefault()
         val date = Date(timestamp * 1_000) // Multiply by 1000 because the timestamp is in seconds

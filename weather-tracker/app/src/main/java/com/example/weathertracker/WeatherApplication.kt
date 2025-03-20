@@ -8,6 +8,7 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class WeatherApplication : Application(), Configuration.Provider {
+
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
@@ -15,4 +16,4 @@ class WeatherApplication : Application(), Configuration.Provider {
         get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
-} 
+}
