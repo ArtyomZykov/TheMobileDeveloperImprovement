@@ -18,10 +18,10 @@
 
 Экраны:
 1. CurrentWeatherFragment
-   <img src="gitResources/currentWeatherScreen.png" style="max-width: 100px;">
+   <img src="gitResources/currentWeatherScreen.png" style="width: 300;">
 
 2. ForecastFragment
-   <img src="gitResources/dailyWeatherScreen.png" style="max-width: 100px;">
+   <img src="gitResources/dailyWeatherScreen.png" style="width: 300;">
 
 3. SettingsFragment
-   <img src="gitResources/settingsScreen.png" style="max-width: 100px;">
+   <img src="gitResources/settingsScreen.png" style="width: 300;">
