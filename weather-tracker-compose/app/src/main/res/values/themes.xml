@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.WeatherTracker" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.WeatherTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- ... остальные атрибуты ... -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>
