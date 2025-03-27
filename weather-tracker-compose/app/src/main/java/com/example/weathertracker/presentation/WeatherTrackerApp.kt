@@ -19,10 +19,10 @@ fun WeatherTrackerApp() {
             CurrentWeatherScreen(
                 onForecastClick = {
                     navController.navigate("forecast")
-                },
+                }
             )
         }
-        composable("settings") {
+        composable("forecast") {
             ForecastScreen(
                 onBackClick = { navController.navigateUp() }
             )

@@ -1,7 +1,6 @@
 package com.example.weathertracker.presentation.forecast
 
 import androidx.lifecycle.viewModelScope
-import com.example.weathertracker.domain.model.DailyForecastEntity
 import com.example.weathertracker.domain.usecase.GetDailyForecastFlowUseCase
 import com.example.weathertracker.domain.usecase.SyncDailyForecastUseCase
 import com.example.weathertracker.presentation.common.StatefulViewModel
@@ -17,7 +16,7 @@ import javax.inject.Inject
 class ForecastViewModel @Inject constructor(
     private val getDailyForecastFlowUseCase: GetDailyForecastFlowUseCase,
     private val syncDailyForecastUseCase: SyncDailyForecastUseCase,
-) : StatefulViewModel<UiState<List<DailyForecastEntity>>, Action, Event>(UiState.Loading) {
+) : StatefulViewModel<UiState<ForecastState>, Action, Event>(UiState.Loading) {
 
     override fun onStateObserved() {
         observeForecast()
@@ -36,10 +35,11 @@ class ForecastViewModel @Inject constructor(
                 mutableState.value = UiState.Error("Get cashed forecast error")
             }
             .collect { forecast ->
-                if (forecast == null) {
-                    mutableState.value = UiState.Error("Error sync forecast")
+                if (forecast != null) {
+                    val stateModel = forecast.toState()
+                    mutableState.value = UiState.Success(stateModel)
                 } else {
-                    mutableState.value = UiState.Success(forecast)
+                    mutableState.value = UiState.Error("Error sync forecast")
                 }
             }
     }
@@ -70,4 +70,4 @@ class ForecastViewModel @Inject constructor(
         object ShowSyncErrorView : Event()
         object HideRefreshView : Event()
     }
-} 
+}
