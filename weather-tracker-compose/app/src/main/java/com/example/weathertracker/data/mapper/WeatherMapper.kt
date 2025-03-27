@@ -8,15 +8,15 @@ import com.example.weathertracker.domain.model.DailyForecastEntity
 import com.example.weathertracker.domain.model.WeatherEntity
 
 fun CurrentWeatherResponse.toWeatherDbEntity() = WeatherDbEntity(
-    id = id,
-    temperature = mainInfo.temp,
-    feelsLike = mainInfo.feelsLike,
-    humidity = mainInfo.humidity,
-    pressure = mainInfo.pressure,
-    windSpeed = wind.speed,
-    description = weather.firstOrNull()?.description ?: "",
-    icon = weather.firstOrNull()?.icon ?: "",
-    timestamp = dt
+    id = requireNotNull(id),
+    temperature = requireNotNull(mainInfo?.temp),
+    feelsLike = requireNotNull(mainInfo?.feelsLike),
+    humidity = requireNotNull(mainInfo?.humidity),
+    pressure = requireNotNull(mainInfo?.pressure),
+    windSpeed = requireNotNull(wind?.speed),
+    description = weather?.firstOrNull()?.description ?: "",
+    icon = weather?.firstOrNull()?.icon ?: "",
+    timestamp = requireNotNull(dt),
 )
 
 fun WeatherDbEntity.toWeatherEntity() = WeatherEntity(
@@ -30,27 +30,3 @@ fun WeatherDbEntity.toWeatherEntity() = WeatherEntity(
     icon = icon,
     timestamp = timestamp
 )
-
-fun ForecastResponse.ForecastItem.toForecastDbEntity(): ForecastDbEntity {
-    return ForecastDbEntity(
-        date = dt,
-        minTemp = main.tempMin,
-        maxTemp = main.tempMax,
-        humidity = main.humidity,
-        pressure = main.pressure,
-        windSpeed = wind.speed,
-        description = weather.firstOrNull()?.description ?: "",
-        icon = weather.firstOrNull()?.icon ?: ""
-    )
-}
-
-fun ForecastDbEntity.toDailyForecastEntity() = DailyForecastEntity(
-    date = date,
-    minTemp = minTemp,
-    maxTemp = maxTemp,
-    humidity = humidity,
-    pressure = pressure,
-    windSpeed = windSpeed,
-    description = description,
-    icon = icon
-) 

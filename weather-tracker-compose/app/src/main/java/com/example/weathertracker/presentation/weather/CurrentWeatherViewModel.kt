@@ -1,7 +1,6 @@
 package com.example.weathertracker.presentation.weather
 
 import androidx.lifecycle.viewModelScope
-import com.example.weathertracker.domain.model.WeatherEntity
 import com.example.weathertracker.domain.usecase.GetCurrentWeatherFlowUseCase
 import com.example.weathertracker.domain.usecase.SyncCurrentWeatherUseCase
 import com.example.weathertracker.presentation.common.StatefulViewModel
@@ -18,7 +17,7 @@ import kotlin.onFailure
 class CurrentWeatherViewModel @Inject constructor(
     private val getCurrentWeatherFlowUseCase: GetCurrentWeatherFlowUseCase,
     private val syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase,
-) : StatefulViewModel<UiState<WeatherEntity>, Action, Event>(UiState.Loading) {
+) : StatefulViewModel<UiState<CurrentWeatherState>, Action, Event>(UiState.Loading) {
 
     override fun onStateObserved() {
         observeWeather()
@@ -42,7 +41,8 @@ class CurrentWeatherViewModel @Inject constructor(
                 if (weather == null) {
                     mutableState.value = UiState.Error("Error sync current weather")
                 } else {
-                    mutableState.value = UiState.Success(weather)
+                    val stateModel = weather.toState()
+                    mutableState.value = UiState.Success(data = stateModel)
                 }
             }
     }
@@ -77,4 +77,4 @@ class CurrentWeatherViewModel @Inject constructor(
         object ShowSyncErrorView : Event()
         object HideRefreshView : Event()
     }
-} 
+}

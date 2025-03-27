@@ -40,9 +40,7 @@ class WeatherRepositoryImpl @Inject constructor(
             longitude = MOSCOW_LOCATION.longitude,
         )
         
-        val dailyForecasts: List<ForecastDbEntity> = response
-            .list
-            .map { it.toForecastDbEntity() }
+        val dailyForecasts: List<ForecastDbEntity> = response.toForecastDbEntity()
         
         forecastDao.insertForecasts(dailyForecasts)
         return dailyForecasts.map { it.toDailyForecastEntity() }
