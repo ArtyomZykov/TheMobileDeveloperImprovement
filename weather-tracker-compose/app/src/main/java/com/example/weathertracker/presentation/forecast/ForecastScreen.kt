@@ -111,7 +111,7 @@ private fun ForecastItem(forecast: ForecastState.ForecastItemState) {
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = stringResource(
-                R.string.temperature_format,
+                R.string.temperature_range_format,
                 forecast.maxTemp,
                 forecast.minTemp,
             ),
