@@ -1,5 +1,5 @@
 <details close>
-<summary>Исзодный план от ментора (Оригинал https://docs.google.com/document/d/1GjZxxSaG780reKt4n9e-4H1N9C5qCx1M31UTA3GEKrY)</summary>
+<summary>Исходный план от ментора (Оригинал https://docs.google.com/document/d/1GjZxxSaG780reKt4n9e-4H1N9C5qCx1M31UTA3GEKrY)</summary>
 <br>
 Цели: 
 
@@ -80,4 +80,9 @@ https://github.com/ArtyomZykov/TheMobileDeveloperImprovement/tree/master/weather
 7. WorkManager: для фонового обновления данных о погоде.
 8. Broadcast Receiver: для уведомлений о значительных изменениях погоды.
 9. ContentProvider: для предоставления данных о погоде другим приложениям.
+</details>
+<details close>
+<summary>Точка контроля 4. weather-tracker-comose</summary>
+<br>
+https://github.com/ArtyomZykov/TheMobileDeveloperImprovement/tree/master/weather-tracker-compose
 </details>
