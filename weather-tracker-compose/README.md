@@ -14,22 +14,26 @@
 1. Однонаправленный поток данных. Путём StateFlow и EventFlow, которые позволяют
    передавать данные между ViewModel и View.
 
-abstract class StatefulViewModel<State : Any, Action, Event>(initialState: State) : ViewModel() {
-
-    protected val mutableState = MutableStateFlow<State>(initialState)
-    internal val state: StateFlow<State> = mutableState
-
-    private val mutableEvent: Channel<Event> = Channel()
-    internal val event: Flow<Event> get() = mutableEvent.receiveAsFlow()
-    ...
-}
+   ```kotlin
+   abstract class StatefulViewModel<State : Any, Action, Event>(initialState: State) : ViewModel() {
+   
+       protected val mutableState = MutableStateFlow<State>(initialState)
+       internal val state: StateFlow<State> = mutableState
+   
+       private val mutableEvent: Channel<Event> = Channel()
+       internal val event: Flow<Event> get() = mutableEvent.receiveAsFlow()
+       ...
+   }
+   ```
 
 2. Интенты. Пользовательские действия представлены как sealed Action
 3. Редьюсер в виде handleAction функции, которая принимает пользовательское событие и
    преобразовывает его в состояние. При необходимости можно в отдельную сущность вынести, класс
    Reducer.
 
-internal abstract fun handleAction(action: Action)
+   ```kotlin
+   internal abstract fun handleAction(action: Action)
+   ```
 
 4. Иммутабельные состояния через sealed class.
 
