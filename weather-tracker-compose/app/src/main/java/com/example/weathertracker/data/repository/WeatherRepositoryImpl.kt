@@ -10,7 +10,6 @@ import com.example.weathertracker.data.mapper.toWeatherDbEntity
 import com.example.weathertracker.domain.model.DailyForecastEntity
 import com.example.weathertracker.domain.model.WeatherEntity
 import com.example.weathertracker.domain.repository.WeatherRepository
-import com.example.weathertracker.util.NetworkUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -21,7 +20,6 @@ class WeatherRepositoryImpl @Inject constructor(
     private val api: OpenWeatherApi,
     private val weatherDao: WeatherDao,
     private val forecastDao: ForecastDao,
-    private val networkUtils: NetworkUtils
 ) : WeatherRepository {
 
     override suspend fun getRemoteCurrentWeather(): WeatherEntity {
@@ -92,4 +90,4 @@ class WeatherRepositoryImpl @Inject constructor(
     private companion object {
         private val MOSCOW_LOCATION = LocationEntity(latitude = 55.7558, longitude = 37.6173)
     }
-} 
+}
