@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Weather Tracker Comopse"
 include(":app")
- 
+include(":shared")
