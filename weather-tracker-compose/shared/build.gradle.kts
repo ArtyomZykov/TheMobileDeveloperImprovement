@@ -1,6 +1,18 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
+}
+
+dependencies {
+    ksp(libs.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 kotlin {
@@ -58,8 +70,31 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-                // Add KMP dependencies here
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(libs.kotlinx.collectionsImmutable)
+
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
+
+                implementation("io.insert-koin:koin-compose:4.0.3")
+                implementation("io.insert-koin:koin-compose-viewmodel:4.0.3")
+                implementation("io.insert-koin:koin-core:4.0.3")
+
+                implementation(libs.room.runtime)
+                implementation(libs.sqlite.bundled)
+
+                implementation("moe.tlaster:precompose:1.7.0-alpha03")
+//                implementation("moe.tlaster:precompose-koin:1.7.0-alpha03")
+
+                implementation(libs.kotlinx.coroutines)
+
+                implementation(libs.datastore.preferences)
+
+                implementation(libs.ktor)
+                implementation("io.ktor:ktor-client-cio:3.1.2")
+                implementation(libs.kotlinx.serialization)
+                implementation(libs.ktor.kotlinxSerialization)
             }
         }
 

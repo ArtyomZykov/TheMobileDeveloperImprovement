@@ -1,14 +1,12 @@
 pluginManagement {
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
         mavenCentral()
+        google()
         gradlePluginPortal()
+//        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+//        maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
+//        maven("https://androidx.dev/storage/compose-compiler/repository")
+//        maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
     }
 }
 dependencyResolutionManagement {
