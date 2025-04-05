@@ -24,9 +24,6 @@ android {
         versionName = "0.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String", "WEATHER_API_KEY", "\"KEY\"")
-        buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/data/2.5/\"")
     }
 
     buildTypes {
@@ -52,17 +49,13 @@ android {
         buildConfig = true
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
-    }
 }
 
 dependencies {
     implementation(project(":shared"))
 
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(libs.material)
-    implementation("io.insert-koin:koin-android:4.0.3")
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.material)
+    implementation(libs.koin.android)
 }

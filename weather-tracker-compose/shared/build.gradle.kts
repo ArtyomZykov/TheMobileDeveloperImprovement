@@ -75,12 +75,11 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(libs.kotlinx.collectionsImmutable)
+                implementation(libs.kotlinx.datetime)
 
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
-
-                implementation("io.insert-koin:koin-compose:4.0.3")
-                implementation("io.insert-koin:koin-compose-viewmodel:4.0.3")
-                implementation("io.insert-koin:koin-core:4.0.3")
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose)
+                implementation(libs.koin.compose.viewModel)
 
                 implementation(libs.room.runtime)
                 implementation(libs.sqlite.bundled)
