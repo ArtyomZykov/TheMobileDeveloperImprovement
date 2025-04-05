@@ -14,6 +14,10 @@ actual val roomDatabaseModule: Module = module {
     single<RoomDatabase.Builder<WeatherDatabase>> {
         getDatabaseBuilder()
     }
+    
+    single<WeatherDatabase> {
+        get<RoomDatabase.Builder<WeatherDatabase>>().build()
+    }
 }
 
 private fun getDatabaseBuilder(): RoomDatabase.Builder<WeatherDatabase> {

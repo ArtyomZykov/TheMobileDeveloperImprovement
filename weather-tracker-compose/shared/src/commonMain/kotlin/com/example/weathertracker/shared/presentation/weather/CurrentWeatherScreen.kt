@@ -57,7 +57,7 @@ fun CurrentWeatherScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "",
+                        text = currentState.data.temperature.toString(),
 //                        text = stringResource(
 //                            R.string.temperature_format,
 //                            currentState.data.temperature,

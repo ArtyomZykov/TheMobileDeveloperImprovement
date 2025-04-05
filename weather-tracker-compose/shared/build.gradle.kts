@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.serialization)
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
 }
@@ -92,7 +93,9 @@ kotlin {
                 implementation(libs.datastore.preferences)
 
                 implementation(libs.ktor)
-                implementation("io.ktor:ktor-client-cio:3.1.2")
+                implementation(libs.ktor.logging)
+                implementation(libs.ktor.contentNegotiation)
+                implementation(libs.ktor.cioClient)
                 implementation(libs.kotlinx.serialization)
                 implementation(libs.ktor.kotlinxSerialization)
             }

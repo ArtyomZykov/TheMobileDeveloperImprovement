@@ -30,7 +30,7 @@ class WeatherRepositoryImpl(
 
     override suspend fun getRemoteCurrentWeather(): WeatherEntity {
         val response: CurrentWeatherResponse = httpClient.get {
-            url(path = "/weather")
+            url("https://api.openweathermap.org/data/2.5/weather")
             parameter("lat", MOSCOW_LOCATION.latitude)
             parameter("lon", MOSCOW_LOCATION.longitude)
             parameter("units", "metric")

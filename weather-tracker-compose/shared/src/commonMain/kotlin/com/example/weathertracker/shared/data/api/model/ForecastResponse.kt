@@ -10,6 +10,8 @@ data class ForecastResponse(
     @SerialName("city")
     val city: City? = null,
 ) {
+
+    @Serializable
     data class ForecastItem(
         @SerialName("dt")
         val dt: Long? = null,
@@ -23,6 +25,7 @@ data class ForecastResponse(
         val dateText: String? = null,
     )
 
+    @Serializable
     data class MainInfo(
         @SerialName("temp")
         val temp: Double? = null,
@@ -36,6 +39,7 @@ data class ForecastResponse(
         val pressure: Int? = null,
     )
 
+    @Serializable
     data class Weather(
         @SerialName("description")
         val description: String? = null,
@@ -43,11 +47,13 @@ data class ForecastResponse(
         val icon: String? = null,
     )
 
+    @Serializable
     data class Wind(
         @SerialName("speed")
         val speed: Double? = null,
     )
 
+    @Serializable
     data class City(
         @SerialName("name")
         val name: String? = null,

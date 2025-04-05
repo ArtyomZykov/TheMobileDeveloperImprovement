@@ -1,67 +1,36 @@
 [versions]
-agp = "8.9.0"
-kotlin = "2.1.10"
-ksp = "2.1.10-1.0.30"
-coreKtx = "1.15.0"
-junit = "4.13.2"
+agp = "8.9.1"
+kotlin = "2.1.20"
+ksp = "2.1.20-1.0.32"
 junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.1"
 compose-plugin = "1.8.0-beta01"
-constraintlayout = "2.2.1"
 hilt = "2.56"
 ktor = "3.1.2"
 kotlinx-coroutines = "1.10.1"
 kotlinx-collectionsImmutable = "0.3.8"
-retrofit = "2.11.0"
-okhttp = "4.12.0"
-datastore = "1.1.3"
-work = "2.10.0"
-lifecycle = "2.8.7"
-location = "21.3.0"
-hilt-work = "1.2.0"
+datastore = "1.1.4"
 kotlinx-serialization = "1.8.0"
-navigation-safeargs = "2.8.9"
-play-services-tasks = "18.2.1"
-javapoet = "1.13.0"
-kotlinStdlib = "2.1.10"
 kotlinTest = "2.1.10"
-runner = "1.5.2"
-core = "1.5.0"
-room = "2.7.0-alpha10"
-sqlite = "2.5.0-SNAPSHOT"
+runner = "1.6.2"
+core = "1.6.1"
+room = "2.7.0-rc03"
+sqlite = "2.5.0-rc03"
 
 [libraries]
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-okhttp-core = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
-workmanager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location" }
-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt-work" }
-play-services-tasks = { group = "com.google.android.gms", name = "play-services-tasks", version.ref = "play-services-tasks" }
-javapoet = { group = "com.squareup", name = "javapoet", version.ref = "javapoet" }
-hilt-work-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-work" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlinTest" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 ktor = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-cioClient = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-kotlinxSerialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-collectionsImmutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collectionsImmutable" }
@@ -74,9 +43,9 @@ room = { id = "androidx.room", version.ref = "room" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation-safeargs" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }

@@ -16,6 +16,8 @@ data class CurrentWeatherResponse(
     @SerialName("dt")
     val dt: Long? = null,
 ) {
+
+    @Serializable
     data class MainInfo(
         @SerialName("temp")
         val temp: Double? = null,
@@ -27,11 +29,13 @@ data class CurrentWeatherResponse(
         val pressure: Int? = null,
     )
 
+    @Serializable
     data class Wind(
         @SerialName("speed")
         val speed: Double? = null,
     )
 
+    @Serializable
     data class Weather(
         @SerialName("description")
         val description: String? = null,
