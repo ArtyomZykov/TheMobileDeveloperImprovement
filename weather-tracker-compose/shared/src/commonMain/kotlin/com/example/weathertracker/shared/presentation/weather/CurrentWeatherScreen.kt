@@ -18,6 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.weathertracker.shared.presentation.common.UiState
+import com.example.weathertracker.shared.resources.Res
+import com.example.weathertracker.shared.resources.current_weather_moscow
+import com.example.weathertracker.shared.resources.forecast_button
+import com.example.weathertracker.shared.resources.temperature_format
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -51,17 +56,15 @@ fun CurrentWeatherScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        text = "",
-//                        text = stringResource(R.string.current_weather_moscow),
+                        text = stringResource(Res.string.current_weather_moscow),
                         style = MaterialTheme.typography.headlineMedium,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = currentState.data.temperature.toString(),
-//                        text = stringResource(
-//                            R.string.temperature_format,
-//                            currentState.data.temperature,
-//                        ),
+                        text = stringResource(
+                            Res.string.temperature_format,
+                            currentState.data.temperature,
+                        ),
                         style = MaterialTheme.typography.displayLarge,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -72,8 +75,7 @@ fun CurrentWeatherScreen(
                     Spacer(modifier = Modifier.height(32.dp))
                     Button(onClick = onForecastClick) {
                         Text(
-                            text = "",
-//                            text = stringResource(R.string.forecast_button),
+                            text = stringResource(Res.string.forecast_button),
                         )
                     }
                 }

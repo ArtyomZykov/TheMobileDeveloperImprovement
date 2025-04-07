@@ -21,6 +21,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.url
+import io.ktor.http.encodedPath
 
 class WeatherRepositoryImpl(
     private val httpClient: HttpClient,
@@ -30,7 +31,7 @@ class WeatherRepositoryImpl(
 
     override suspend fun getRemoteCurrentWeather(): WeatherEntity {
         val response: CurrentWeatherResponse = httpClient.get {
-            url("https://api.openweathermap.org/data/2.5/weather")
+            url("weather")
             parameter("lat", MOSCOW_LOCATION.latitude)
             parameter("lon", MOSCOW_LOCATION.longitude)
             parameter("units", "metric")
@@ -43,7 +44,7 @@ class WeatherRepositoryImpl(
 
     override suspend fun getRemoteDailyForecast(): List<DailyForecastEntity> {
         val response: ForecastResponse = httpClient.get {
-            url(path = "/forecast")
+            url("forecast")
             parameter("lat", MOSCOW_LOCATION.latitude)
             parameter("lon", MOSCOW_LOCATION.longitude)
             parameter("units", "metric")
@@ -99,7 +100,6 @@ class WeatherRepositoryImpl(
     }
 
     private companion object {
-
         private val MOSCOW_LOCATION = LocationEntity(
             latitude = 55.7558,
             longitude = 37.6173,

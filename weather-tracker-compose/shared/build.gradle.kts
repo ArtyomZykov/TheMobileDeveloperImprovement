@@ -16,6 +16,12 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
+compose.resources {
+    packageOfResClass = "com.example.weathertracker.shared.resources"
+    publicResClass = false
+    generateResClass = auto
+}
+
 kotlin {
 
 // Target declarations - add or remove as needed below. These define
@@ -74,6 +80,7 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
+                implementation(compose.components.resources)
                 implementation(libs.kotlinx.collectionsImmutable)
                 implementation(libs.kotlinx.datetime)
 
