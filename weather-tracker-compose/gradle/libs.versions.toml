@@ -19,6 +19,7 @@ core = "1.6.1"
 room = "2.7.0-rc03"
 sqlite = "2.5.0-rc03"
 koin = "4.0.3"
+precompose = "1.7.0-alpha03"
 
 [libraries]
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -45,6 +46,7 @@ ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = 
 ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-cioClient = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-kotlinxSerialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
 
 [plugins]
 room = { id = "androidx.room", version.ref = "room" }

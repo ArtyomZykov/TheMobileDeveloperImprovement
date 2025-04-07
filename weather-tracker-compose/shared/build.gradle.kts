@@ -81,7 +81,10 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.components.resources)
+                implementation(libs.precompose)
+
                 implementation(libs.kotlinx.collectionsImmutable)
+                implementation(libs.kotlinx.coroutines)
                 implementation(libs.kotlinx.datetime)
 
                 implementation(libs.koin.core)
@@ -90,12 +93,6 @@ kotlin {
 
                 implementation(libs.room.runtime)
                 implementation(libs.sqlite.bundled)
-
-                implementation("moe.tlaster:precompose:1.7.0-alpha03")
-//                implementation("moe.tlaster:precompose-koin:1.7.0-alpha03")
-
-                implementation(libs.kotlinx.coroutines)
-
                 implementation(libs.datastore.preferences)
 
                 implementation(libs.ktor)
