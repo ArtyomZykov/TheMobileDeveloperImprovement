@@ -4,6 +4,12 @@ import com.example.weathertracker.shared.domain.usecase.GetCurrentWeatherFlowUse
 import com.example.weathertracker.shared.domain.usecase.GetCurrentWeatherFlowUseCaseImpl
 import com.example.weathertracker.shared.domain.usecase.GetDailyForecastFlowUseCase
 import com.example.weathertracker.shared.domain.usecase.GetDailyForecastFlowUseCaseImpl
+import com.example.weathertracker.shared.domain.usecase.GetTempSensingSystemFlowUseCase
+import com.example.weathertracker.shared.domain.usecase.GetTempSensingSystemFlowUseCaseImpl
+import com.example.weathertracker.shared.domain.usecase.GetTempSensingSystemUseCase
+import com.example.weathertracker.shared.domain.usecase.GetTempSensingSystemUseCaseImpl
+import com.example.weathertracker.shared.domain.usecase.SetTempSensingSystemUseCase
+import com.example.weathertracker.shared.domain.usecase.SetTempSensingSystemUseCaseImpl
 import com.example.weathertracker.shared.domain.usecase.SyncCurrentWeatherUseCase
 import com.example.weathertracker.shared.domain.usecase.SyncCurrentWeatherUseCaseImpl
 import com.example.weathertracker.shared.domain.usecase.SyncDailyForecastUseCase
@@ -19,4 +25,7 @@ internal val useCaseModule: Module = module {
     factoryOf(::GetDailyForecastFlowUseCaseImpl) { bind<GetDailyForecastFlowUseCase>() }
     factoryOf(::SyncCurrentWeatherUseCaseImpl) { bind<SyncCurrentWeatherUseCase>() }
     factoryOf(::SyncDailyForecastUseCaseImpl) { bind<SyncDailyForecastUseCase>() }
+    factoryOf(::GetTempSensingSystemFlowUseCaseImpl) { bind<GetTempSensingSystemFlowUseCase>() }
+    factoryOf(::SetTempSensingSystemUseCaseImpl) { bind<SetTempSensingSystemUseCase>() }
+    factoryOf(::GetTempSensingSystemUseCaseImpl) { bind<GetTempSensingSystemUseCase>() }
 }

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class WeatherDbEntity(
     @PrimaryKey
     val id: Long,
-    val temperature: Double,
+    val kelvinTemperature: Double,
     val feelsLike: Double,
     val humidity: Int,
     val pressure: Int,

@@ -1,6 +1,7 @@
 package com.example.weathertracker.shared.di
 
 import com.example.weathertracker.shared.presentation.forecast.ForecastViewModel
+import com.example.weathertracker.shared.presentation.settings.SettingsViewModel
 import com.example.weathertracker.shared.presentation.weather.CurrentWeatherViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModelOf
@@ -11,4 +12,5 @@ internal val viewModelModule: Module = module {
 
     viewModelOf(::CurrentWeatherViewModel)
     viewModelOf(::ForecastViewModel)
+    viewModelOf(::SettingsViewModel)
 }

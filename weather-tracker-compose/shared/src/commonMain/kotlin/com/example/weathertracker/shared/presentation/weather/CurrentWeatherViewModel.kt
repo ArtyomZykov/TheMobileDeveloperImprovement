@@ -1,7 +1,10 @@
 package com.example.weathertracker.shared.presentation.weather
 
 import androidx.lifecycle.viewModelScope
+import com.example.weathertracker.shared.domain.model.TemperatureSensingSystemEntity
 import com.example.weathertracker.shared.domain.usecase.GetCurrentWeatherFlowUseCase
+import com.example.weathertracker.shared.domain.usecase.GetTempSensingSystemFlowUseCase
+import com.example.weathertracker.shared.domain.usecase.GetTempSensingSystemUseCase
 import com.example.weathertracker.shared.domain.usecase.SyncCurrentWeatherUseCase
 import com.example.weathertracker.shared.presentation.common.StatefulViewModel
 import com.example.weathertracker.shared.presentation.common.UiState
@@ -14,10 +17,13 @@ import kotlin.onFailure
 class CurrentWeatherViewModel(
     private val getCurrentWeatherFlowUseCase: GetCurrentWeatherFlowUseCase,
     private val syncCurrentWeatherUseCase: SyncCurrentWeatherUseCase,
+    private val getTempSensingSystemUseCase: GetTempSensingSystemUseCase,
+    private val getTempSensingSystemFlowUseCase: GetTempSensingSystemFlowUseCase,
 ) : StatefulViewModel<UiState<CurrentWeatherState>, Action, Event>(UiState.Loading) {
 
     override fun onStateObserved() {
         observeWeather()
+        observeTempSystem()
         syncWeather()
     }
 
@@ -38,10 +44,24 @@ class CurrentWeatherViewModel(
                 if (weather == null) {
                     mutableState.value = UiState.Error("Error sync current weather")
                 } else {
-                    val stateModel = weather.toState()
+                    val tempSystem = getTempSensingSystemUseCase()
+                    val stateModel = weather.toState(
+                        isCelsius = tempSystem is TemperatureSensingSystemEntity.Celsius
+                    )
                     mutableState.value = UiState.Success(data = stateModel)
                 }
             }
+    }
+
+    private fun observeTempSystem() = viewModelScope.launch {
+        getTempSensingSystemFlowUseCase().collect { tempSystem ->
+            val state = (mutableState.value as? UiState.Success)?.data ?: return@collect
+            mutableState.value = UiState.Success(
+                data = state.copy(
+                    isCelsius = tempSystem is TemperatureSensingSystemEntity.Celsius
+                )
+            )
+        }
     }
 
     private fun syncWeather() = viewModelScope.launch {

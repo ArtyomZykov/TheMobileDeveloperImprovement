@@ -1,9 +1,11 @@
 <resources>
-    <string name="temperature_format">%1$s°C</string>
+    <string name="temperature_format_fahrenheit">%1$s°F</string>
+    <string name="temperature_format_celsius">%1$s°C</string>
     <string name="current_weather_moscow">Moscow</string>
-    <string name="forecast_button">5 Day Forecast</string>
+    <string name="to_forecast_button">5 Day Forecast</string>
+    <string name="forecast_title">5 day forecast by 3 hours</string>
     <string name="error_location_not_available">Location not available</string>
     <string name="error_network">Network error. Please try again</string>
     <string name="error_unknown">Unknown error occurred</string>
-    <string name="temperature_range_format">%1$s°C / %2$s°C</string>
+    <string name="temperature_range_format">%1$sK / %2$sK</string>
 </resources>

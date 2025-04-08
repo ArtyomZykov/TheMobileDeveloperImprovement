@@ -21,7 +21,6 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.url
-import io.ktor.http.encodedPath
 
 class WeatherRepositoryImpl(
     private val httpClient: HttpClient,
@@ -34,7 +33,6 @@ class WeatherRepositoryImpl(
             url("weather")
             parameter("lat", MOSCOW_LOCATION.latitude)
             parameter("lon", MOSCOW_LOCATION.longitude)
-            parameter("units", "metric")
         }.body()
 
         val weatherEntity = response.toWeatherDbEntity()
@@ -47,7 +45,6 @@ class WeatherRepositoryImpl(
             url("forecast")
             parameter("lat", MOSCOW_LOCATION.latitude)
             parameter("lon", MOSCOW_LOCATION.longitude)
-            parameter("units", "metric")
             parameter("cnt", 40)
         }.body()
 
@@ -70,7 +67,7 @@ class WeatherRepositoryImpl(
         weatherDao.insertWeather(
             WeatherDbEntity(
                 id = weather.id,
-                temperature = weather.temperature,
+                kelvinTemperature = weather.temperature,
                 feelsLike = weather.feelsLike,
                 humidity = weather.humidity,
                 pressure = weather.pressure,

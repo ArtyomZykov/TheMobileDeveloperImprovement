@@ -20,7 +20,7 @@ data class CurrentWeatherResponse(
     @Serializable
     data class MainInfo(
         @SerialName("temp")
-        val temp: Double? = null,
+        val kelvinTemp: Double? = null,
         @SerialName("feels_like")
         val feelsLike: Double? = null,
         @SerialName("humidity")

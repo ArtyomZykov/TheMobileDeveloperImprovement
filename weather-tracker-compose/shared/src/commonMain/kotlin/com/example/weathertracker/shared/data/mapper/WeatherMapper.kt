@@ -6,7 +6,7 @@ import com.example.weathertracker.shared.domain.model.WeatherEntity
 
 fun CurrentWeatherResponse.toWeatherDbEntity() = WeatherDbEntity(
     id = requireNotNull(id),
-    temperature = requireNotNull(mainInfo?.temp),
+    kelvinTemperature = requireNotNull(mainInfo?.kelvinTemp),
     feelsLike = requireNotNull(mainInfo?.feelsLike),
     humidity = requireNotNull(mainInfo?.humidity),
     pressure = requireNotNull(mainInfo?.pressure),
@@ -18,7 +18,7 @@ fun CurrentWeatherResponse.toWeatherDbEntity() = WeatherDbEntity(
 
 fun WeatherDbEntity.toWeatherEntity() = WeatherEntity(
     id = id,
-    temperature = temperature,
+    temperature = kelvinTemperature,
     feelsLike = feelsLike,
     humidity = humidity,
     pressure = pressure,
