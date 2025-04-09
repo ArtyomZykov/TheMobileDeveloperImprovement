@@ -19,6 +19,8 @@ core = "1.6.1"
 room = "2.7.0-rc03"
 sqlite = "2.5.0-rc03"
 koin = "4.0.3"
+koin-annotations = "2.0.0"
+koin-ksp = "2.0.0"
 precompose = "1.7.0-alpha03"
 
 [libraries]
@@ -41,6 +43,8 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
+koin-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-ksp" }
 ktor = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
