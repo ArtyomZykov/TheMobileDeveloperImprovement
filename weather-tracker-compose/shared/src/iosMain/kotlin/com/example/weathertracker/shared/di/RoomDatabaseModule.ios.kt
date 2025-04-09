@@ -2,7 +2,9 @@ package com.example.weathertracker.shared.di
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.example.weathertracker.shared.data.db.WeatherDatabase
+import io.ktor.client.engine.darwin.Darwin
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -14,9 +16,11 @@ actual val roomDatabaseModule: Module = module {
     single<RoomDatabase.Builder<WeatherDatabase>> {
         getDatabaseBuilder()
     }
-    
+
     single<WeatherDatabase> {
-        get<RoomDatabase.Builder<WeatherDatabase>>().build()
+        get<RoomDatabase.Builder<WeatherDatabase>>()
+            .setDriver(BundledSQLiteDriver())
+            .build()
     }
 }
 

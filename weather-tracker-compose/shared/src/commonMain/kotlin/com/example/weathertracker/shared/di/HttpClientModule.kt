@@ -1,24 +1,20 @@
 package com.example.weathertracker.shared.di
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.http.parameters
-import io.ktor.http.parametersOf
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.util.AttributeKey
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 internal val httpClientModule: Module = module {
     single {
-        HttpClient(CIO) {
+        HttpClient(getHttpClientEngine()) {
             install(ContentNegotiation) {
                 json(
                     Json {
@@ -46,3 +42,5 @@ internal val httpClientModule: Module = module {
         }
     }
 }
+
+internal expect fun getHttpClientEngine(): HttpClientEngine

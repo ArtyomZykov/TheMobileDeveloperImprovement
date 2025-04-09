@@ -10,7 +10,7 @@ import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
 
 @Composable
-fun App() {
+fun ComposeApp() {
 
     val navigator = rememberNavigator()
 
@@ -18,7 +18,7 @@ fun App() {
         MaterialTheme {
             NavHost(
                 navigator = navigator,
-                initialRoute = "/current_weather",
+                initialRoute = CurrentWeatherScreen.key,
             ) {
                 CurrentWeatherScreen.apply {
                     scene(route = key) {
