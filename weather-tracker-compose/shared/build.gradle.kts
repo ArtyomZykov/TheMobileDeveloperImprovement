@@ -10,7 +10,6 @@ plugins {
 
 dependencies {
     ksp(libs.room.compiler)
-    ksp(libs.koin.compiler)
 }
 
 room {
@@ -66,7 +65,6 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
 
                 implementation(libs.koin.core)
-                api(libs.koin.annotations)
                 implementation(libs.koin.compose)
                 implementation(libs.koin.compose.viewModel)
 

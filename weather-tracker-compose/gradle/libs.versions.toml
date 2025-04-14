@@ -2,7 +2,6 @@
 agp = "8.9.1"
 kotlin = "2.1.20"
 ksp = "2.1.20-1.0.32"
-junitVersion = "1.2.1"
 material = "1.12.0"
 activity = "1.10.1"
 compose-plugin = "1.7.3"
@@ -13,25 +12,16 @@ kotlinx-collectionsImmutable = "0.3.8"
 kotlinx-datetime = "0.6.2"
 datastore = "1.1.4"
 kotlinx-serialization = "1.8.0"
-kotlinTest = "2.1.10"
-runner = "1.6.2"
-core = "1.6.1"
-room = "2.7.0-rc03"
-sqlite = "2.5.0-rc03"
+room = "2.7.0"
+sqlite = "2.5.0"
 koin = "4.0.3"
-koin-annotations = "2.0.0"
-koin-ksp = "2.0.0"
 precompose = "1.7.0-alpha03"
 
 [libraries]
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
-kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlinTest" }
-androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
-androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -43,8 +33,6 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
-koin-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-ksp" }
 ktor = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
