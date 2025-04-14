@@ -93,7 +93,13 @@ https://github.com/ArtyomZykov/TheMobileDeveloperImprovement/tree/master/weather
 
 </details>
 <details close>
-<summary>Точка контроля 4. weather-tracker-comose</summary>
+<summary>Точка контроля 4. weather-tracker-compose</summary>
 <br>
 https://github.com/ArtyomZykov/TheMobileDeveloperImprovement/tree/master/weather-tracker-compose
+</details>
+<details close>
+<summary>Точка контроля 5 (в т.ч. 5.1 и 5.2). weather-tracker-compose-multiplatform</summary>
+<br>
+Нативный Android проект из 4 точки контроля был взят за основу, переведен на Kotlin Multiplatform (логика + UI)
+https://github.com/ArtyomZykov/TheMobileDeveloperImprovement/tree/master/weather-tracker-compose-multiplatform
 </details>
