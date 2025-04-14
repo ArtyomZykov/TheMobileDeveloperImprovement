@@ -6,6 +6,7 @@
 4. Jetpack ViewModel.
 5. Room.
 6. Ktor.
+7. DataStore.
 
 Экраны iOS:
 
